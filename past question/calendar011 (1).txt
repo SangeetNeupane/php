@@ -1,0 +1,62 @@
+<html>
+<head><title>Calendar</title>
+<style>
+table td{
+	line-height:1.5em;
+}
+div{
+	position:relative;
+	top : 15px;
+	left:150px;
+}
+.main{
+	color:red;
+}
+</style>
+</head>
+<body>
+<?php 
+$year = !empty($_GET['year'])?$_GET['year']:date('Y');
+$month = !empty($_GET['month'])?$_GET['month']:date('m');
+$date = "$year-$month";
+echo "<div>";
+$date = strtotime($date);
+echo "<h3>".date('F,Y',$date)."</h3>";
+$startDate = date('Y-m-01',$date);
+$startDay = date('w',strtotime($startDate));
+$endDay = date('t',$date);
+
+echo "<table>";
+echo "<tr>
+	<td>Sun</td>
+	<td>Mon</td>
+	<td>Tue</td>
+	<td>Wed</td>
+	<td>Thur</td>
+	<td>Fri</td>
+	<td>Sat</td>
+	</tr>";
+$continue = true;
+$day=1;
+while($continue){
+	echo "<tr>";
+	for($i=0;$i<7;$i++){
+		if($i<$startDay || $day>$endDay){
+			echo "<td>&nbsp;</td>";
+		}else{
+			echo "<td>$day</td>";
+			$day++;
+		}
+	}
+		if($day<$endDay){
+			$continue = true;
+		}else{
+			$continue =false;
+		}
+	echo "</tr>";
+	$startDay=0;
+}
+echo "</table></div>";
+?>
+</body>
+</html>
